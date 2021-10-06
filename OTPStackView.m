@@ -133,7 +133,7 @@
 -(instancetype)init {
     if (self = [super init]) {
         UIView* bottomLine = [[UIView alloc]init];
-        bottomLine.backgroundColor = UIColor.VTWhite3;
+        bottomLine.backgroundColor = UIColor.LightGrayColor;
         [self addSubview:bottomLine];
         [bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self);
