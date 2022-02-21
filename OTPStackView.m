@@ -39,9 +39,9 @@
         textField.borderStyle = UITextBorderStyleNone;
         textField.userInteractionEnabled = YES;
         textField.textAlignment = NSTextAlignmentCenter;
-        @weakify(self);
+        __weak typeof(self)weakSelf = self;
         textField.OTPTextFieldDeleteBackward = ^(OTPTextField * _Nonnull currentTextField) {
-            @strongify(self);
+            __strong typeof(weakSelf)strongSelf = weakSelf;
             if (currentTextField) {
                 self.currentTextField = currentTextField;
             }
@@ -133,13 +133,14 @@
 -(instancetype)init {
     if (self = [super init]) {
         UIView* bottomLine = [[UIView alloc]init];
+        bottomLine.translatesAutoresizingMaskIntoConstraints = NO;
         bottomLine.backgroundColor = UIColor.LightGrayColor;
         [self addSubview:bottomLine];
-        [bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.equalTo(self);
-            make.top.equalTo(self.mas_bottom);
-            make.height.mas_equalTo(0.5);
-        }];
+        
+        [[bottomLine.bottomAnchor constraintEqualToAnchor:self constant:1] setActive:YES];
+        [[bottomLine.leftAnchor constraintEqualToAnchor:self.leftAnchor] setActive:YES];
+        [[bottomLine.rightAnchor constraintEqualToAnchor:self.rightAnchor] setActive:YES];
+        [[bottomLine.heightAnchor constraintEqualToConstant:1] setActive:YES];
     }
     return self;
 }
